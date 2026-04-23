@@ -74,8 +74,8 @@ namespace WinFormsApp1_lab4
             {
                 conn.Open();
 
-                SqlDataAdapter da = new SqlDataAdapter(
-                    "SELECT MANV, HOTEN, EMAIL, LUONG, TENDN FROM NHANVIEN", conn);
+                SqlDataAdapter da = new SqlDataAdapter("SP_SEL_NHANVIEN", conn);
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -104,12 +104,13 @@ namespace WinFormsApp1_lab4
                 }
 
                 dgvEmployeeList.DataSource = dt;
+
                 dgvEmployeeList.Columns["LUONG"].Visible = false;
+
                 if (dgvEmployeeList.Columns["LUONG_DISPLAY"] != null)
                     dgvEmployeeList.Columns["LUONG_DISPLAY"].HeaderText = "LƯƠNG";
             }
         }
-
         // ================= CLICK ROW (FIX) =================
         private void dgvEmployeeList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
