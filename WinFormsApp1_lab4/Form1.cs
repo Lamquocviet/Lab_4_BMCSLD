@@ -1,5 +1,8 @@
-using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
 
 
 namespace WinFormsApp1_lab4
@@ -7,7 +10,15 @@ namespace WinFormsApp1_lab4
     public partial class frmLogin : Form
     {
         string connStr = "Data Source=.;Initial Catalog=QLSV_Lab4;Integrated Security=True;Trust Server Certificate=True";
-        public frmLogin()
+
+    public static byte[] HashSHA1(string input)
+    {
+        using (SHA1 sha1 = SHA1.Create())
+        {
+            return sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+        }
+    }
+    public frmLogin()
         {
             InitializeComponent();
         }
@@ -24,29 +35,38 @@ namespace WinFormsApp1_lab4
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string manv = txtUsername.Text.Trim();
+            string manv = txtUsername.Text.Trim(); // 👉 dùng MANV
             string mk = txtPassword.Text.Trim();
+
+            // 🔐 Hash mật khẩu ở client
+            byte[] mkHash = HashSHA1(mk);
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
 
-                string sql = "SELECT COUNT(*) FROM NHANVIEN WHERE MANV=@manv AND CONVERT(VARCHAR(MAX), MATKHAU)=@mk";
+                SqlCommand cmd = new SqlCommand("SP_SEL_PUBLIC_ENCRYPT_NHANVIEN", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@manv", manv);
-                cmd.Parameters.AddWithValue("@mk", mk);
+                cmd.Parameters.AddWithValue("@MANV", manv);
+                cmd.Parameters.AddWithValue("@MK", mkHash);
 
-                int kq = (int)cmd.ExecuteScalar();
+                SqlDataReader reader = cmd.ExecuteReader();
 
-                if (kq > 0)
+                if (reader.Read())
                 {
-                    MessageBox.Show("Đăng nhập thành công!");
+                    //string hoten = reader["HOTEN"].ToString();
 
+                    MessageBox.Show("Đăng nhập thành công!\nXin chào");
+
+                    // 👉 chuyển form nếu cần
+                    QLNV f = new QLNV();
+                    f.Show();
+                    this.Hide();
                 }
                 else
                 {
-                    MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                    MessageBox.Show("Sai mã nhân viên hoặc mật khẩu!");
                 }
             }
         }
