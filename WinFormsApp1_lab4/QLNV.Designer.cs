@@ -45,13 +45,12 @@
             lblEmail = new Label();
             lblUsername = new Label();
             llbId = new Label();
-            groupBox2 = new GroupBox();
-            dataGridView1 = new DataGridView();
             groupBox1 = new GroupBox();
+            dgvEmployeeList = new DataGridView();
+            lblEmployeeList = new Label();
             groupBox3.SuspendLayout();
-            groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEmployeeList).BeginInit();
             SuspendLayout();
             // 
             // btnEdit
@@ -62,6 +61,7 @@
             btnEdit.TabIndex = 3;
             btnEdit.Text = "Sửa";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnAdd
             // 
@@ -71,6 +71,7 @@
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // txtPassword
             // 
@@ -78,6 +79,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(287, 27);
             txtPassword.TabIndex = 11;
+            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // txtSaraly
             // 
@@ -147,7 +149,7 @@
             groupBox3.Controls.Add(btnEdit);
             groupBox3.Controls.Add(btnDelete);
             groupBox3.Controls.Add(btnAdd);
-            groupBox3.Location = new Point(14, 241);
+            groupBox3.Location = new Point(3, 123);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(944, 61);
             groupBox3.TabIndex = 0;
@@ -161,6 +163,7 @@
             btnDelete.TabIndex = 2;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // lblName
             // 
@@ -198,25 +201,6 @@
             llbId.TabIndex = 0;
             llbId.Text = "Mã NV";
             // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(dataGridView1);
-            groupBox2.Controls.Add(groupBox3);
-            groupBox2.Location = new Point(-11, 144);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(970, 331);
-            groupBox2.TabIndex = 3;
-            groupBox2.TabStop = false;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 17);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(933, 218);
-            dataGridView1.TabIndex = 1;
-            // 
             // groupBox1
             // 
             groupBox1.Controls.Add(txtPassword);
@@ -238,21 +222,44 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin nhân viên";
             // 
+            // dgvEmployeeList
+            // 
+            dgvEmployeeList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEmployeeList.Location = new Point(3, 229);
+            dgvEmployeeList.Name = "dgvEmployeeList";
+            dgvEmployeeList.RowHeadersWidth = 51;
+            dgvEmployeeList.Size = new Size(933, 245);
+            dgvEmployeeList.TabIndex = 1;
+            dgvEmployeeList.CellContentClick += dgvEmployeeList_CellContentClick;
+            // 
+            // lblEmployeeList
+            // 
+            lblEmployeeList.AutoSize = true;
+            lblEmployeeList.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmployeeList.Location = new Point(322, 185);
+            lblEmployeeList.Name = "lblEmployeeList";
+            lblEmployeeList.Size = new Size(289, 38);
+            lblEmployeeList.TabIndex = 3;
+            lblEmployeeList.Text = "Danh sách nhân viên";
+            // 
             // QLNV
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(948, 450);
-            Controls.Add(groupBox2);
+            ClientSize = new Size(948, 480);
+            Controls.Add(lblEmployeeList);
+            Controls.Add(dgvEmployeeList);
+            Controls.Add(groupBox3);
             Controls.Add(groupBox1);
             Name = "QLNV";
             Text = "QLNV";
+            Load += QLNV_Load;
             groupBox3.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEmployeeList).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -274,8 +281,8 @@
         private Label lblEmail;
         private Label lblUsername;
         private Label llbId;
-        private GroupBox groupBox2;
-        private DataGridView dataGridView1;
         private GroupBox groupBox1;
+        private DataGridView dgvEmployeeList;
+        private Label lblEmployeeList;
     }
 }

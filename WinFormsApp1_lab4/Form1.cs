@@ -35,10 +35,10 @@ namespace WinFormsApp1_lab4
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string manv = txtUsername.Text.Trim(); // 👉 dùng MANV
+            string manv = txtUsername.Text.Trim(); 
             string mk = txtPassword.Text.Trim();
 
-            // 🔐 Hash mật khẩu ở client
+            //  Hash mật khẩu ở client
             byte[] mkHash = HashSHA1(mk);
 
             using (SqlConnection conn = new SqlConnection(connStr))
@@ -59,7 +59,7 @@ namespace WinFormsApp1_lab4
 
                     MessageBox.Show("Đăng nhập thành công!\nXin chào");
 
-                    // 👉 chuyển form nếu cần
+                    
                     QLNV f = new QLNV();
                     f.Show();
                     this.Hide();
